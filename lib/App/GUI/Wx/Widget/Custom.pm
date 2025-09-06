@@ -1,5 +1,5 @@
 
-package App::GUI::Wx::Widget;
+package App::GUI::Wx::Widget::Custom;
 use v5.12;
 use warnings;
 our $VERSION = '0.1';
@@ -13,7 +13,7 @@ __END__
 
 =head1 NAME
 
-App::GUI::Wx::Widget - custom controls for graphical apps
+App::GUI::Wx::Widget::Custom - special controls for graphics applications
 
 =head1 SYNOPSIS
 
