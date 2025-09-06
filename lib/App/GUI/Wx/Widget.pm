@@ -2,6 +2,8 @@
 package App::GUI::Wx::Widget;
 use v5.12;
 use warnings;
+our $VERSION = '0.1';
+
 
 1;
 

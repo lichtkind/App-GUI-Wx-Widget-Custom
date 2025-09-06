@@ -1,12 +1,12 @@
 ### NAME
 
-    App-GUI-Harmonograph - Cyperharmonograph draws beautiful circular images
+    App-GUI-Wx-Widget - custom units of visual control
 
 ### VERSION
 
-    1.01
+    0.1
 
-[Home on CPAN](https://metacpan.org/pod/App::GUI::Harmonograph)
+[Home on CPAN](https://metacpan.org/pod/App::GUI::Wx::Widget)
 
     This is the landing page for the user documentation on github.
     Please use the link above to visit the de facto homepage of the project.
@@ -67,13 +67,13 @@
 
 [SEE ALSO](https://lichtkind.de/code)
 
-[CHANGES](https://github.com/lichtkind/App-GUI-Harmonograph/blob/main/Changes) (with roadmap)
+[CHANGES](https://github.com/lichtkind/App-GUI-Wx-Widget/blob/main/Changes) (with roadmap)
 
-[CONTRIBUTING](https://github.com/lichtkind/App-GUI-Harmonograph/blob/main/CONTRIBUTING)
+[CONTRIBUTING](https://github.com/lichtkind/App-GUI-Wx-Widget/blob/main/CONTRIBUTING)
 
 ### COPYRIGHT
 
-    Copyright(c) 2022-25 Herbert Breunung,
+    Copyright(c) 2025 Herbert Breunung,
 
     All rights reserved.  This program is free software;
     you can redistribute it and/or modify it under GPL version 3
