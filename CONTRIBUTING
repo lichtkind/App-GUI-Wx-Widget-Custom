@@ -2,20 +2,20 @@
 
 Please submit Bug reports under
 
- https://rt.cpan.org/Dist/Display.html?Name=App-GUI-Wx-Widget-Custom (preferred)
+ https://rt.cpan.org/Dist/Display.html?Name=Wx-Custom (preferred)
 
  or if you like
 
- https://github.com/lichtkind/App-GUI-Wx-Widget-Custom/issues
+ https://github.com/lichtkind/Wx-Custom/issues
 
 
 Patches are welcome under:
 
- https://github.com/lichtkind/App-GUI-Wx-Widget-Custom/pulls (preferred)
+ https://github.com/lichtkind/Wx-Custom/pulls (preferred)
 
  but arrive also via
 
- https://rt.cpan.org/Dist/Display.html?Name=App-GUI-Wx-Widget-Custom
+ https://rt.cpan.org/Dist/Display.html?Name=Wx-Custom
 
 
 Also feature Requests are welcome but please read the TODO first.

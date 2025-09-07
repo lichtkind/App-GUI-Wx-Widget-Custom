@@ -1,12 +1,12 @@
 ### NAME
 
-    App-GUI-Wx-Widget - custom units of visual control
+    Wx-Custom - complex objects for graphical apps
 
 ### VERSION
 
     0.1
 
-[Home on CPAN](https://metacpan.org/pod/App::GUI::Wx::Widget)
+[Home on CPAN](https://metacpan.org/pod/Wx::Custom)
 
     This is the landing page for the user documentation on github.
     Please use the link above to visit the de facto homepage of the project.
@@ -67,9 +67,9 @@
 
 [SEE ALSO](https://lichtkind.de/code)
 
-[CHANGES](https://github.com/lichtkind/App-GUI-Wx-Widget/blob/main/Changes) (with roadmap)
+[CHANGES](https://github.com/lichtkind/Wx-Custom/blob/main/Changes) (with roadmap)
 
-[CONTRIBUTING](https://github.com/lichtkind/App-GUI-Wx-Widget/blob/main/CONTRIBUTING)
+[CONTRIBUTING](https://github.com/lichtkind/Wx-Custom/blob/main/CONTRIBUTING)
 
 ### COPYRIGHT
 
