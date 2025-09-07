@@ -67,7 +67,7 @@
 
 [SEE ALSO](https://lichtkind.de/code)
 
-[CHANGES](https://github.com/lichtkind/Wx-Custom/blob/main/Changes) (with roadmap)
+[CHANGES](https://github.com/lichtkind/Wx-Custom/blob/main/Changes)
 
 [CONTRIBUTING](https://github.com/lichtkind/Wx-Custom/blob/main/CONTRIBUTING)
 
