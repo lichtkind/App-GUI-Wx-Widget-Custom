@@ -29,20 +29,19 @@ sub new {
     } );
 
     Wx::Event::EVT_LEFT_DOWN( $self, sub {
-        my( $panel, $event ) = @_;
+        my( $self, $event ) = @_;
         next unless ref $self->{'left_click'};
         $self->{'left_click'}->( $event );
         $event->Skip;
     });
 
     Wx::Event::EVT_RIGHT_DOWN( $self, sub {
-        my( $panel, $event ) = @_;
+        my( $self, $event ) = @_;
         next unless ref $self->{'right_click'};
         $self->{'right_click'}->( $event );
         $event->Skip;
     });
 
-    $self->{'size'} = $size;
     $self->{'data'} = $data;
     $self->{'init_color'} = $init_color;
     $self->reset_color( );
@@ -50,6 +49,7 @@ sub new {
 }
 
 sub get_data  { $_[0]->{'data'} }
+
 sub get_color { $_[0]->{'color'} }
 sub set_color {
     my ( $self, $color ) = @_;
