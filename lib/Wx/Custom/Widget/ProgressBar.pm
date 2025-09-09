@@ -40,11 +40,24 @@ sub new {
         my $start_color = Wx::Colour->new( @{$self->{'foreground_colors'}[0]} );
         my $segment_size = $x / ($self->{'color_count'} - 1);
         for my $segment_index (1 .. $self->{'color_count'} - 1){
-            my $end_pos = $segment_index + $segment_size;
+            my $end_pos = $segment_index * $segment_size;
             my $end_color = Wx::Colour->new( @{$self->{'foreground_colors'}[$segment_index]} );
-            return $dc->GradientFillLinear( Wx::Rect->new( $start_pos, 0, $max_pos, $y ), $start_color, $end_color )
+            if ($end_pos > $max_pos){
+                my $percent_of_rest = ($end_pos - $max_pos) / $segment_size;
+                my $percent_of_slice = 1 - $percent_of_rest;
+                $segment_size *= $percent_of_slice;
+                $end_color = Wx::Colour->new(
+                    int (($percent_of_slice * $self->{'foreground_colors'}[$segment_index][0])
+                        +($percent_of_rest  * $self->{'foreground_colors'}[$segment_index-1][0])),
+                    int (($percent_of_slice * $self->{'foreground_colors'}[$segment_index][1])
+                        +($percent_of_rest  * $self->{'foreground_colors'}[$segment_index-1][1])),
+                    int (($percent_of_slice * $self->{'foreground_colors'}[$segment_index][2])
+                        +($percent_of_rest  * $self->{'foreground_colors'}[$segment_index-1][2])),
+                );
+            }
+            return $dc->GradientFillLinear( Wx::Rect->new( $start_pos, 0, $segment_size, $y ), $start_color, $end_color )
                 if $end_pos > $max_pos;
-            $dc->GradientFillLinear( Wx::Rect->new( $start_pos, 0, $end_pos, $y ), $start_color, $end_color );
+            $dc->GradientFillLinear( Wx::Rect->new( $start_pos, 0, $segment_size, $y ), $start_color, $end_color );
             $start_pos = $end_pos;
             $start_color = $end_color;
         }
@@ -64,7 +77,7 @@ sub set_background_color {
 sub set_foreground_colors {
     my ( $self, @colors) = @_;
     for my $color (@colors) {
-        return unless ref $color ne 'ARRAY' or @$color != 3;
+        return if ref $color ne 'ARRAY' or @$color != 3;
         for my $index (0 .. 2){
             $color->[$index] =   0 if $color->[$index] <   0;
             $color->[$index] = 255 if $color->[$index] > 255;

@@ -8,13 +8,13 @@ use warnings;
 use Wx;
 
 sub new {
-    my ( $class, $parent, $size, $init_color, $data  ) = @_;
+    my ($class, $parent, $size, $init_color, $data) = @_;
     $size = [15, 15] unless defined $size;
     return if ref $size ne 'ARRAY' or @$size != 2;
     $init_color = [0,0,0] unless defined $init_color;
     return if ref $init_color ne 'ARRAY' or @$init_color != 3;
 
-    my $self = $class->SUPER::new( $parent, -1, [-1,-1], $size);
+    my $self = $class->SUPER::new( $parent, -1, [-1,-1], $size );
 
     Wx::Event::EVT_PAINT( $self, sub {
         my( $panel, $event ) = @_;
@@ -48,7 +48,16 @@ sub new {
     $self;
 }
 
-sub get_data  { $_[0]->{'data'} }
+sub set_left_click_callback {
+    my ($self, $code) = @_;
+    return unless ref $code eq 'CODE';
+    $self->{'left_click'} = $code;
+}
+sub set_right_click_callback {
+    my ($self, $code) = @_;
+    return unless ref $code eq 'CODE';
+    $self->{'right_click'} = $code;
+}
 
 sub get_color { $_[0]->{'color'} }
 sub set_color {
@@ -62,15 +71,7 @@ sub reset_color {
     $self->set_color( $self->{'init_color'} );
 }
 
-sub set_left_click_callback {
-    my ($self, $code) = @_;
-    return unless ref $code eq 'CODE';
-    $self->{'left_click'} = $code;
-}
-sub set_right_click_callback {
-    my ($self, $code) = @_;
-    return unless ref $code eq 'CODE';
-    $self->{'right_click'} = $code;
-}
+sub get_data  { $_[0]->{'data'} }
+sub set_data  { $_[0]->{'data'} = $_[1] }
 
 1;
