@@ -1,5 +1,5 @@
 
-# colored bar shows canvas status colors used in drawing
+# canvas for a horizontal, polychrome or monochrome gradient
 
 package Wx::Custom::Widget::ProgressBar;
 use base qw/Wx::Panel/;
@@ -74,6 +74,7 @@ sub set_background_color {
     }
     $self->{'background_color'} = $background_color;
 }
+
 sub set_foreground_colors {
     my ( $self, @colors) = @_;
     for my $color (@colors) {
@@ -97,8 +98,10 @@ sub set_progress {
 }
 sub add_progress {
     my ( $self, $percent ) = @_;
-    return if ref $percent or $percent < 0 or $percent > 100;
-    $self->{'progress'} = $percent;
+    return if not defined $percent;
+    $self->{'progress'} += $percent;
+    $self->{'progress'} = 100 if $self->{'progress'} > 100;
+    $self->{'progress'} = 0   if $self->{'progress'} <   0;
     $self->Refresh;
 }
 sub reset {

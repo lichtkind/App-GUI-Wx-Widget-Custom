@@ -1,14 +1,14 @@
 
 # slider widget with display of value and nudge buttons
 
-package App::GUI::Wx::Widget::Custom::SliderCombo;
+package Wx::Custom::Widget::SliderCombo;
 use v5.12;
 use warnings;
 use Wx;
 use base qw/Wx::Panel/;
 
 sub new {
-    my ( $class, $parent, $slider_size, $label, $help, $min, $max, $init_value, $delta, $value_name ) = @_;
+    my ( $class, $parent, $slider_size, $label, $help, $min, $max, $init_value, $delta, $value_name) = @_;
     return unless defined $max;
 
     my $self = $class->SUPER::new( $parent, -1);
@@ -98,7 +98,7 @@ sub SetCallBack {
     $self->{'callback'} = $code;
 }
 
-sub fractional_modulo {
+sub mod_real {
     my ($value, $mod) = @_;
     my $div = int $value / $mod;
     return ($value - ($div * $mod));

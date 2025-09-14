@@ -46,9 +46,9 @@ sub new {
     my $button_ar = Wx::Button->new( $self, -1, 'add rainb.');
 
     Wx::Event::EVT_BUTTON( $button_rm, $button_rm, sub { $monochrome->reset } );
-    Wx::Event::EVT_BUTTON( $button_am, $button_am, sub { $monochrome->set_progress( $monochrome->get_progress + 10 ); } );
+    Wx::Event::EVT_BUTTON( $button_am, $button_am, sub { $monochrome->add_progress( 10 ); } );
     Wx::Event::EVT_BUTTON( $button_rr, $button_rr, sub { $rainbow->reset    } );
-    Wx::Event::EVT_BUTTON( $button_ar, $button_ar, sub { $rainbow->set_progress( $rainbow->get_progress + 10 )  } );
+    Wx::Event::EVT_BUTTON( $button_ar, $button_ar, sub { $rainbow->add_progress( 10 )  } );
 
     my $item = &Wx::wxALIGN_CENTER_VERTICAL | &Wx::wxALIGN_CENTER_HORIZONTAL | &Wx::wxALL;
     my $row = &Wx::wxALIGN_CENTER_VERTICAL | &Wx::wxALIGN_LEFT | &Wx::wxLEFT;
