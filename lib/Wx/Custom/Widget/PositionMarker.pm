@@ -19,6 +19,7 @@ sub new {
     return $self unless ref $self;
     return unless ref $self->set_foreground_color( $foreground_color, 'passive' );
     $self->set_border_color( [0, 0, 0],'passive' );
+    $self->set_line_thickness( 4,'passive' );
     $self->set_paint_callback( sub {
         my ($dc, $x, $y) = @_;
         return if $self->{'state'} eq 'empty';
@@ -29,7 +30,7 @@ sub new {
             $dc->DrawLine( 0,  $y-1, $x-1, 0);
             return;
         }
-        my $line_thick = 4;
+        my $line_thick = $self->get_line_thickness;
         $dc->SetPen( Wx::Pen->new( $fg_color, $line_thick, &Wx::wxPENSTYLE_SOLID ) );
         my $left  = $line_thick + 1;
         my $right = $x - $line_thick - 1;
@@ -68,6 +69,15 @@ sub set_foreground_color {
     $self->{'foreground_color'} = $self->_put_color_in_range( $foreground_color );
     $self->Refresh unless defined $passive and $passive;
     return $foreground_color;
+}
+
+sub get_line_thickness { $_[0]->{'line_thickness'} }
+sub set_line_thickness {
+    my ( $self, $thickness, $passive) = @_;
+    return unless defined $thickness and $thickness > 0 and $thickness < 10;
+    $self->{'line_thickness'} = $thickness;
+    $self->Refresh unless defined $passive and $passive;
+    return $thickness;
 }
 
 1;

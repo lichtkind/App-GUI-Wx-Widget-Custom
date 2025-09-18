@@ -1,9 +1,12 @@
+
+# select between colors by left or right click
+
+package Wx::Custom::Widget::::ColorToggle;
 use v5.12;
 use warnings;
 use Wx;
-
-package App::GUI::Cellgraph::Widget::ColorToggle;
-use base qw/Wx::Panel/;
+use Wx::Custom::Widget::ColorDisplay;
+use base qw/Wx::Custom::Widget::ColorDisplay/;
 
 sub new {
     my ( $class, $parent, $x, $y, $colors, $start  ) = @_;
