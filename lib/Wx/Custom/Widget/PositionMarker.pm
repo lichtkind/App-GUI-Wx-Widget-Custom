@@ -22,6 +22,7 @@ sub new {
     $self->set_line_thickness( 4,'passive' );
     $self->set_paint_callback( sub {
         my ($dc, $x, $y) = @_;
+        #$self->{'paint_position'}->( @_ ) if ref $self->{'paint_position'};
         return if $self->{'state'} eq 'empty';
         my $fg_color = Wx::Colour->new( @{$self->get_foreground_color} );
         if ($self->{'state'} eq 'disabled'){
@@ -50,6 +51,12 @@ sub new {
     } );
     return unless $self->set_state( $state );
     return $self;
+}
+
+sub set_paint_callback {
+    my ($self, $code) = @_;
+    return unless ref $code eq 'CODE';
+    $self->{'paint_position'} = $code;
 }
 
 sub get_state { $_[0]->{'state'} }

@@ -9,7 +9,7 @@ use Wx::Custom::Widget::ColorDisplay;
 use base qw/Wx::Custom::Widget::ColorDisplay/;
 
 sub new {
-    my ( $class, $parent, $x, $y, $colors, $start  ) = @_;
+    my ( $class, $parent, $size, $colors, $start_nr  ) = @_;
     return unless ref $colors eq 'ARRAY' and @$colors > 1;
     for (@$colors){ return unless ref $_ eq 'ARRAY' and @$_ == 3 }
 

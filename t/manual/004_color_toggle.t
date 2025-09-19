@@ -4,10 +4,10 @@ use v5.12;
 use warnings;
 use lib 'lib', '../lib';
 
-PositionMarkerTester->new->MainLoop( );
+ColorToggleTester->new->MainLoop( );
 exit 0;
 
-package PositionMarkerTester;
+package ColorToggleTester;
 use v5.12;
 use Wx;
 use base qw/Wx::App/;
@@ -24,16 +24,16 @@ sub OnQuit { my( $self, $event ) = @_; $self->Close( 1 ); }
 sub OnExit { my $app = shift;  1; }
 
 
-package PositionMarkerTester::Frame;
+package ColorToggleTester::Frame;
 use base qw/Wx::Frame/;
-use Wx::Custom::Widget::PositionMarker;
+use Wx::Custom::Widget::ColorToggle;
 
 sub new {
     my ( $class, $parent, $title ) = @_;
     my $self = $class->SUPER::new( $parent, -1, $title );
     $self->SetIcon( Wx::GetWxPerlIcon() );
 
-    my $marker = Wx::Custom::Widget::PositionMarker->new( $self, [30, 30], [20, 20, 200], 'empty');
+    my $ct = Wx::Custom::Widget::ColorToggle->new( $self, [30, 30], [20, 20, 200], 'empty');
 
     my $button_left  = Wx::Button->new( $self, -1, 'left');
     my $button_right = Wx::Button->new( $self, -1, 'right');

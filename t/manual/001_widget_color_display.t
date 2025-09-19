@@ -42,19 +42,26 @@ sub new {
     $black->set_left_click_callback( sub { Wx::MessageBox( 'no data', 'Info',
                                            &Wx::wxOK | &Wx::wxICON_INFORMATION | &Wx::wxSTAY_ON_TOP )
                                                                      unless defined $black->get_data });
-    my $button = Wx::Button->new( $self, -1, 'dimm blue');
-    Wx::Event::EVT_BUTTON( $button, $button, sub {
+    my $dimm_button = Wx::Button->new( $self, -1, 'dimm blue');
+    Wx::Event::EVT_BUTTON( $dimm_button, $dimm_button, sub {
         my $color = $blue->get_background_color();
         $color->[2] -= 10;
         $color->[2] += 250 if $color->[2] < 0;
         $blue->set_background_color( $color );
+    } );
+    my $frame_button = Wx::Button->new( $self, -1, 'toggle frame');
+    Wx::Event::EVT_BUTTON( $frame_button, $frame_button, sub {
+        my $color = $blue->get_border_color();
+        $color = $color->[0] ? [0,0,0] : [255,255,255];
+        $blue->set_border_color( $color );
     } );
 
     my $attr = &Wx::wxALIGN_LEFT | &Wx::wxALIGN_CENTER_VERTICAL | &Wx::wxLEFT | &Wx::wxRIGHT;
     my $sizer = Wx::BoxSizer->new(&Wx::wxHORIZONTAL);
     $sizer->Add( $black,   0, $attr,  25);
     $sizer->Add( $blue,    0, $attr,  15);
-    $sizer->Add( $button,  0, $attr,  15);
+    $sizer->Add( $dimm_button,  0, $attr,  15);
+    $sizer->Add( $frame_button, 0, $attr,  15);
     $sizer->Add( 0,     1, &Wx::wxEXPAND|&Wx::wxGROW);
     $self->SetSizer($sizer);
     $self;
