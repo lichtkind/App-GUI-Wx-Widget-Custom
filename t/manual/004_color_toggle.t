@@ -33,7 +33,7 @@ sub new {
     my $self = $class->SUPER::new( $parent, -1, $title );
     $self->SetIcon( Wx::GetWxPerlIcon() );
 
-    my $ct = Wx::Custom::Widget::ColorToggle->new( $self, [30, 30], [20, 20, 200], 'empty');
+    my $ct = Wx::Custom::Widget::ColorToggle->new( $self, [30, 30], [[20, 20, 200],[120, 120, 250]], 'empty');
 
     my $button_left  = Wx::Button->new( $self, -1, 'left');
     my $button_right = Wx::Button->new( $self, -1, 'right');

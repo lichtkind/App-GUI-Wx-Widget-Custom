@@ -1,7 +1,7 @@
 
 # select between colors by left or right click
 
-package Wx::Custom::Widget::::ColorToggle;
+package Wx::Custom::Widget::ColorToggle;
 use v5.12;
 use warnings;
 use Wx;
@@ -10,51 +10,43 @@ use base qw/Wx::Custom::Widget::ColorDisplay/;
 
 sub new {
     my ( $class, $parent, $size, $colors, $start_nr  ) = @_;
-    return unless ref $colors eq 'ARRAY' and @$colors > 1;
-    for (@$colors){ return unless ref $_ eq 'ARRAY' and @$_ == 3 }
+    $colors //= [[0,0,0], [255, 255, 255],];
+    $start_nr // = 1;
+    return if ref $colors ne 'ARRAY' or not exists $colors->[ $start_nr-1 ];
+    my $start_color = $colors->[ $start_nr-1 ]
 
-    my $self = $class->SUPER::new( $parent, -1, [-1,-1], [$x+2, $y+2]);
-    $self->{'colors'} = $colors;
-    $self->{'callback'} = sub {};
-    $self->{'init'} = $start // 0;
-    $self->{'value'} = -1;
-    $self->{'responsive'} = -1;
+    my $self = $class->SUPER::new( $parent, $size, $start_color );
+    return $self unless ref $self;
+    return unless ref $self->set_background_colors( $colors, 'passive' );
+    $self->{'value'} = $start_nr;
 
-    Wx::Event::EVT_PAINT( $self, sub {
-        my( $cpanel, $event ) = @_;
-        my $dc = Wx::PaintDC->new( $cpanel );
-        my $bg_color = Wx::Colour->new( @{$self->{'colors'}[ $self->{'value'} ]} );
-        $dc->SetBackground( Wx::Brush->new( $bg_color, &Wx::wxBRUSHSTYLE_SOLID ) );
-        $dc->Clear();
-        $dc->SetPen( Wx::Pen->new( Wx::Colour->new( 170, 170, 170 ), 1, &Wx::wxPENSTYLE_SOLID ) );
-        $dc->DrawLine(    0,    0, $x+1,    0 );
-        $dc->DrawLine(    0, $y+1, $x+1, $y+1 );
-        $dc->DrawLine(    0,    0,    0, $y+1 );
-        $dc->DrawLine( $x+1,    0, $x+1, $y+1 );
-    } );
-
-    Wx::Event::EVT_LEFT_DOWN( $self, sub {
-        return unless $self->{'responsive'};
-        my $value = $self->GetValue;
-        $value++;
-        $value = 0 if $value > $self->GetMaxValue;
-        $self->SetValue( $value );
-        $self->{'callback'}->( $self->{'value'}  );
+    $self->set_left_click_callback( sub {
+        my ($event) = @_;
+        $self->{'value'}++;
+        $self->{'value'} = 1 if $self->{'value'} > $self->max_value;
+        $self->{'update'}->( $event ) if ref $self->{'update'};
     });
-    Wx::Event::EVT_RIGHT_DOWN( $self, sub {
-        return unless $self->{'responsive'};
-        my $value = $self->GetValue;
-        $value--;
-        $value = $self->GetMaxValue if $value < 0;
-        $self->SetValue( $value );
-        $self->{'callback'}->( $self->{'value'}  );
+    $self->set_right_click_callback( sub {
+        my ($event) = @_;
+        $self->{'value'}--;
+        $self->{'value'} = $self->max_value if $self->{'value'} < 1;
+        $self->{'update'}->( $event ) if ref $self->{'update'};
     });
-
-    $self->init();
     $self;
 }
 
-sub init { $_[0]->SetValue( $_[0]->{'init'} ) }
+sub get_background_colors { $_[0]->{'background_colors'} }
+sub set_background_colors {
+    my ( $self, $background_colors, $passive) = @_;
+    return if ref $background_colors ne 'ARRAY' or not @$background_colors;
+    for my $color (@$background_colors){
+        return if ref $color ne 'ARRAY' or @$color != 3;
+        $self->_put_color_in_range( $color );
+    }
+    $self->{'background_colors'} = $self->_put_color_in_range( $background_color );
+    $self->Refresh unless defined $passive and $passive;
+    return $background_color;
+}
 
 sub GetValue { $_[0]->{'value'} }
 sub SetValue {
@@ -65,28 +57,12 @@ sub SetValue {
     $self->Refresh;
 }
 
-sub GetMaxValue { $#{$_[0]->{'colors'} } }
+sub max_value { int @{$_[0]->{'background_colors'}} }
 
-sub SetColors {
-    my ( $self, @colors ) = @_;
-    return unless @colors > 1;
-    for (@colors){ return unless ref $_ eq 'ARRAY' and @$_ == 3 }
-    $self->{'colors'} = \@colors;
-    $self->{'init'} = $#colors if $self->{'init'} > $#colors;
-    $self->SetValue( $#colors ) if $self->{'value'} > $#colors;
-    $self->Refresh;
-}
-
-sub Enable {
-    my ( $self, $enable ) = @_;
-    return unless defined $enable;
-    $self->{'responsive'} = $enable;
-}
-
-sub SetCallBack {
-    my ( $self, $code) = @_;
+sub set_update_callback {
+    my ( $self, $code ) = @_;
     return unless ref $code eq 'CODE';
-    $self->{'callback'} = $code;
+    $self->{'update'} = $code;
 }
 
 1;

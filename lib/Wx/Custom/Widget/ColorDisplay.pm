@@ -74,6 +74,7 @@ sub get_background_color { $_[0]->{'background_color'} }
 sub set_background_color {
     my ( $self, $background_color, $passive) = @_;
     return if ref $background_color ne 'ARRAY' or @$background_color != 3;
+
     $self->{'background_color'} = $self->_put_color_in_range( $background_color );
     $self->Refresh unless defined $passive and $passive;
     return $background_color;
