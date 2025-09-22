@@ -33,12 +33,15 @@ sub new {
     my $self = $class->SUPER::new( $parent, -1, $title );
     $self->SetIcon( Wx::GetWxPerlIcon() );
 
+    my $state        = Wx::StaticText->new($self, -1, 1 );
     my $ct = Wx::Custom::Widget::ColorToggle->new( $self, [30, 30], [[20, 20, 200],[120, 120, 250]], 1);
+    $ct->set_update_callback( sub {$state->SetLabel( $ct->GetValue )} );
 
     my $button  = Wx::Button->new( $self, -1, 'toggle sets');
-    my $state        = Wx::StaticText->new($self, -1, 1 );
-
-    Wx::Event::EVT_BUTTON( $button,  $button,  sub {  } );
+    Wx::Event::EVT_BUTTON( $button,  $button,  sub {
+        $ct->max_value == 2 ? $ct->set_background_colors( [[50,10,10], [150,20,20], [250,30,30],] )
+                            : $ct->set_background_colors( [[20, 20, 200],[120, 120, 250]] );
+    } );
 
     my $item = &Wx::wxALIGN_CENTER_VERTICAL | &Wx::wxALIGN_CENTER_HORIZONTAL | &Wx::wxALL;
     my $row = &Wx::wxALIGN_CENTER_VERTICAL | &Wx::wxALIGN_LEFT | &Wx::wxLEFT;
