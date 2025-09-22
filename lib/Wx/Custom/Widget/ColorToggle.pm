@@ -11,9 +11,9 @@ use base qw/Wx::Custom::Widget::ColorDisplay/;
 sub new {
     my ( $class, $parent, $size, $colors, $start_nr  ) = @_;
     $colors //= [[0,0,0], [255, 255, 255],];
-    $start_nr // = 1;
+    $start_nr //= 1;
     return if ref $colors ne 'ARRAY' or not exists $colors->[ $start_nr-1 ];
-    my $start_color = $colors->[ $start_nr-1 ]
+    my $start_color = $colors->[ $start_nr-1 ];
 
     my $self = $class->SUPER::new( $parent, $size, $start_color );
     return $self unless ref $self;
@@ -43,9 +43,9 @@ sub set_background_colors {
         return if ref $color ne 'ARRAY' or @$color != 3;
         $self->_put_color_in_range( $color );
     }
-    $self->{'background_colors'} = $self->_put_color_in_range( $background_color );
+    $self->{'background_colors'} = $background_colors;
     $self->Refresh unless defined $passive and $passive;
-    return $background_color;
+    return $background_colors;
 }
 
 sub GetValue { $_[0]->{'value'} }
