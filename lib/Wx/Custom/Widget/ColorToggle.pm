@@ -22,18 +22,18 @@ sub new {
 
     $self->set_left_click_callback( sub {
         my ($event) = @_;
-        my $value = $self->GetValue;
+        my $value = $self->get_value;
         $value++;
         $value = 1 if $value > $self->max_value;
-        $self->SetValue( $value );
+        $self->set_value( $value );
         $self->{'update'}->( $event ) if ref $self->{'update'};
     });
     $self->set_right_click_callback( sub {
         my ($event) = @_;
-        my $value = $self->GetValue;
+        my $value = $self->get_value;
         $value--;
         $value = $self->max_value if $value < 1;
-        $self->SetValue( $value );
+        $self->set_value( $value );
         $self->{'update'}->( $event ) if ref $self->{'update'};
     });
     $self;
@@ -48,15 +48,15 @@ sub set_background_colors {
         $self->_put_color_in_range( $color );
     }
     $self->{'background_colors'} = $background_colors;
-    $self->SetValue( $self->GetValue, 1 ) unless defined $passive and $passive;
+    $self->set_value( $self->get_value, 1 ) unless defined $passive and $passive;
     return $background_colors;
 }
 
-sub GetValue { $_[0]->{'value'} }
-sub SetValue {
+sub get_value { $_[0]->{'value'} }
+sub set_value {
     my ( $self, $value, $force ) = @_;
     return unless defined $value and $value > -1 and $value <= $self->max_value;
-    return if $self->{'value'} == $value and not (defined $force and $force);
+    return if $self->get_value == $value and not (defined $force and $force);
     $self->{'value'} = $value;
     $self->set_background_color( $self->get_background_colors()->[$value - 1] );
 }

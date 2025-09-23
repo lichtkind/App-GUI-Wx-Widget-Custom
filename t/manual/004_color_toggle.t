@@ -35,7 +35,7 @@ sub new {
 
     my $state        = Wx::StaticText->new($self, -1, 1 );
     my $ct = Wx::Custom::Widget::ColorToggle->new( $self, [30, 30], [[20, 20, 200],[120, 120, 250]], 1);
-    $ct->set_update_callback( sub {$state->SetLabel( $ct->GetValue )} );
+    $ct->set_update_callback( sub {$state->SetLabel( $ct->get_value )} );
 
     my $button  = Wx::Button->new( $self, -1, 'toggle sets');
     Wx::Event::EVT_BUTTON( $button,  $button,  sub {
